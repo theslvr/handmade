@@ -4,6 +4,15 @@ $is_auth = (bool) rand(0, 1);
 $user_name = 'Константин';
 $user_avatar = 'img/user.jpg';
 $category = ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
+
+function format_sum($number) {
+    $number_ceil = ceil($number);
+    if($number_ceil < 1000){
+        return $number_ceil ." ₽";
+    }
+    $final_price = number_format($number_ceil, 0, ',', ' ');
+    return $final_price." ₽";
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -76,29 +85,71 @@ $category = ["Доски и лыжи", "Крепления", "Ботинки", "
             </li>
         </ul>
     </section>
+    <?php
+    $lots = [
+        0 => [
+            'name' => '2014 Rossignol District Snowboard',
+            'category' => 'Доски и лыжи',
+            'price' => 10999,
+            'img' => 'img/lot-1.jpg'
+        ],
+        1 => [
+            'name' => 'DC Ply Mens 2016/2017 Snowboard',
+            'category' => 'Доски и лыжи',
+            'price' => 159999,
+            'img' => 'img/lot-2.jpg'
+        ],
+        2 => [
+            'name' => 'Крепления Union Contact Pro 2015 года размера L/XL',
+            'category' => 'Крепления',
+            'price' => 8000,
+            'img' => 'img/lot-3.jpg'
+        ],
+        3 => [
+            'name' => 'Ботинки для сноуборда DC Mutiny Charcoal',
+            'category' => 'Ботинки',
+            'price' => 10999,
+            'img' => 'img/lot-4.jpg'
+        ],
+        4 => [
+            'name' => 'Куртка для сноуборда DC Mutiny Charcoal',
+            'category' => 'Одежда',
+            'price' => 7500,
+            'img' => 'img/lot-5.jpg'
+        ],
+        5 => [
+            'name' => 'Маска Oakley Canopy',
+            'category' => 'Разное',
+            'price' => 5400,
+            'img' => 'img/lot-6.jpg'
+        ],
+    ];
+    ?>
     <section class="lots">
         <div class="lots__header">
             <h2>Открытые лоты</h2>
         </div>
         <ul class="lots__list">
+            <?php foreach ($lots as $key => $val): ?>
             <li class="lots__item lot">
                 <div class="lot__image">
-                    <img src="img/lot-1.jpg" width="350" height="260" alt="Сноуборд">
+                    <img src="<?=$val['img']; ?>" width="350" height="260" alt="Сноуборд">
                 </div>
                 <div class="lot__info">
-                    <span class="lot__category">Доски и лыжи</span>
-                    <h3 class="lot__title"><a class="text-link" href="lot.html">2014 Rossignol District Snowboard</a></h3>
+                    <span class="lot__category"><?=$val['category']; ?></span>
+                    <h3 class="lot__title"><a class="text-link" href="lot.html"><?=$val['name']; ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
-                            <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost">10 999<b class="rub">р</b></span>
+                            <span class="lot__amount"><?=$val['price']; ?></span>
+                            <span class="lot__cost"><?=format_sum($val['price']); ?></span>
                         </div>
                         <div class="lot__timer timer">
-
+                        11.11
                         </div>
                     </div>
                 </div>
             </li>
+            <?php endforeach; ?>
         </ul>
     </section>
 </main>
@@ -106,15 +157,14 @@ $category = ["Доски и лыжи", "Крепления", "Ботинки", "
 <footer class="main-footer">
     <nav class="nav">
         <ul class="nav__list container">
-                <li class="nav__item">
-                    <?php $index = 0;
-                    $num = count($category);
-                    while ($index < $num) {
-                        $cat = $category[$index];
-                        print ('<li class="nav__item">'.
-                            '<a href="#">' . $cat . '</a>'.'</li>');
-                        ++$index;
-                    } ?>
+            <?php $index = 0;
+            $num = count($category);
+            while ($index < $num): ?>
+            <li class="nav__item">
+                <a href="pages/all-lots.html"><?=$category[$index]; ?></a>
+                <?php $index++; ?>
+                <?php endwhile; ?>
+            </li>
         </ul>
     </nav>
     <div class="main-footer__bottom container">
